@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'net/http'
 require 'json-schema'
+require 'rouge'
 
 JSON_SCHEMA = JSON.parse(IO.read(settings.root + "/config/schema.json"))
 
@@ -59,15 +60,21 @@ end
 get '/' do
   @url = params[:url].to_s
   @errors = []
+  @json = ""
 
   if @url.length > 0
     begin
       s = download_feed(@url)
       response_json = JSON.parse(s)
+
+      formatter = Rouge::Formatters::HTMLInline.new(Rouge::Themes::Base16.new)
+      lexer = Rouge::Lexers::JSON.new
+      @json = formatter.format(lexer.lex(JSON.pretty_generate(response_json)))
+
       results = JSON::Validator.fully_validate(JSON_SCHEMA, response_json)
       for result in results
         @errors << FeedError.new("error", result)
-      end
+      end      
     rescue JSON::ParserError => e
       @errors << FeedError.new("error", "JSON could not be parsed. #{e.message}.")
     rescue FeedError => e
