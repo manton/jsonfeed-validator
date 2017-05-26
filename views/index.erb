@@ -1,0 +1,25 @@
+<form class="form-inline feed_form" method="GET" action="/">
+	<div class="row">
+		<div class="col-md-12 feed_url">
+			<input name="url" type="text" class="form-control" id="jsonfeed_url" placeholder="JSON Feed URL" style="width: 100%;" value="<%= @url %>" />
+		</div>
+	</div>
+</form>
+
+<% if @url.length > 0 && @errors.size == 0 %>
+	<div class="alert alert-success" role="alert">
+		<b>Success!</b> The feed looks valid.
+	</div>	
+<% else %>
+	<% for e in @errors %>
+		<% if e.type == "error" %>
+			<div class="alert alert-danger" role="alert">
+		<% else %>
+			<div class="alert alert-warning" role="alert">
+		<% end %>
+
+		<b><%= e.type.capitalize %>:</b> <%= e.message %>
+
+		</div>	
+	<% end %>
+<% end %>
