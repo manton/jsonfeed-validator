@@ -57,6 +57,32 @@ def download_feed(jsonfeed_url, limit = 5)
   return s
 end
 
+def check_warnings(json)
+  warnings = []
+
+  if json["version"] != "https://jsonfeed.org/version/1"
+    warnings << "The \"version\" field should have the value: https://jsonfeed.org/version/1"
+  end
+  
+  if json["home_page_url"].nil?
+    warnings << "The \"home_page_url\" field is missing. It is strongly recommended, but not required."
+  end
+
+  if json["feed_url"].nil?
+    warnings << "The \"feed_url\" field is missing. It is strongly recommended, but not required."
+  end
+  
+  i = 0
+  for item in json["items"].to_a
+    if item["date_published"].nil?
+#      warnings << "The items array (index #{i}) is missing the \"date_published\" field. It is strongly recommended, but not required."
+    end
+    i = i + 1
+  end
+  
+  return warnings
+end
+
 get '/' do
   @url = params[:url].to_s
   @errors = []
@@ -83,6 +109,11 @@ get '/' do
         cleaned = cleaned.gsub(/The property '#\/([a-z]*)\/([0-9]*)' /, 'The "\1" array (index \2) ')
         cleaned = cleaned.gsub(/ in schema (.*)/, '.')
         @errors << FeedError.new("error", cleaned)
+      end
+      
+      warnings = check_warnings(response_json)
+      for w in warnings
+        @errors << FeedError.new("warning", w)
       end      
     rescue JSON::ParserError => e
       @errors << FeedError.new("error", "JSON could not be parsed. #{e.message}.")
