@@ -64,6 +64,10 @@ get '/' do
 
   if @url.length > 0
     begin
+      if !@url.include?("http")
+        @url = "http://" + @url
+      end
+    
       s = download_feed(@url)
       response_json = JSON.parse(s)
 
@@ -73,7 +77,12 @@ get '/' do
 
       results = JSON::Validator.fully_validate(JSON_SCHEMA, response_json)
       for result in results
-        @errors << FeedError.new("error", result)
+        cleaned = result
+        cleaned = cleaned.gsub("The property '#/' ", "The top-level object ")
+        cleaned = cleaned.gsub(/The property '#\/([a-z]*)' /, 'The "\1" field ')
+        cleaned = cleaned.gsub(/The property '#\/([a-z]*)\/([0-9]*)' /, 'The "\1" array (index \2) ')
+        cleaned = cleaned.gsub(/ in schema (.*)/, '.')
+        @errors << FeedError.new("error", cleaned)
       end      
     rescue JSON::ParserError => e
       @errors << FeedError.new("error", "JSON could not be parsed. #{e.message}.")
