@@ -40,7 +40,7 @@ def download_feed(jsonfeed_url, limit = 5)
       location = response["location"]
       s = download_feed(location, limit - 1)
     elsif response.is_a?(Net::HTTPNotFound)
-      raise FeedError.new("error", "404. No feed was found at this URL.")
+      raise FeedError.new("error", "404 not found. No feed was found at this URL.")
     elsif response.is_a?(Net::HTTPRequestTimeOut) || response.is_a?(Net::HTTPGatewayTimeOut)
       raise FeedError.new("error", "Timeout downloading the feed.")
     else
@@ -71,7 +71,7 @@ get '/' do
       s = download_feed(@url)
       response_json = JSON.parse(s)
 
-      formatter = Rouge::Formatters::HTMLInline.new(Rouge::Themes::Base16.new)
+      formatter = Rouge::Formatters::HTML.new(Rouge::Themes::Github.new)
       lexer = Rouge::Lexers::JSON.new
       @json = formatter.format(lexer.lex(JSON.pretty_generate(response_json)))
 
