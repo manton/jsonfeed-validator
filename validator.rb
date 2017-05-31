@@ -44,13 +44,11 @@ def download_feed(jsonfeed_url, limit = 5)
     elsif response.is_a?(Net::HTTPRequestTimeOut) || response.is_a?(Net::HTTPGatewayTimeOut)
       raise FeedError.new("error", "Timeout downloading the feed.")
     else
-      logger.info "Feed: Unknown error #{response.code} #{response.message}, #{response.class.name}"
       raise FeedError.new("error", "Unknown error #{response.code} #{response.message}, #{response.class.name}.")
     end
   rescue FeedError => e
     raise e
   rescue Exception => e
-    logger.info "Feed: Unknown exception #{e.class.name}"
     raise FeedError.new("error", "Unknown exception #{e.class.name}.")
   end
       
