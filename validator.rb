@@ -106,6 +106,7 @@ get '/' do
         cleaned = cleaned.gsub(/The property '#\/([a-z]*)' /, 'The "\1" field ')
         cleaned = cleaned.gsub(/The property '#\/([a-z]*)\/([0-9]*)' /, 'The "\1" array (index \2) ')
         cleaned = cleaned.gsub(/The property '#\/([a-z]*)\/([0-9]*)\/([a-z]*)\/([a-z]*)' /, 'The "\4" field in "\3" ("\1" array, index \2) ')
+        cleaned = cleaned.gsub(/The property '#\/([a-z]*)\/([0-9]*)\/([a-z]*)\/([0-9]*)' /, 'The object in "\3" (index \4, from array "\1" index \2) ')
         cleaned = cleaned.gsub('- allOf #0:', '')
         cleaned = cleaned.gsub(/ in schema (.*)/, '.')
         @errors << FeedError.new("error", cleaned)
