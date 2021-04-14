@@ -64,6 +64,13 @@
         }
       }
     },
+    "authors": {
+      "description": "Specifies one or more feed authors.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/author"
+      }
+    },
     "extension": {
       "description": "Custom extension to the JSON Feed format",
       "type": "object",
@@ -106,6 +113,9 @@
         "author": {
           "$ref": "#/definitions/author"
         },
+        "authors": {
+          "$ref": "#/definitions/authors"
+        },
         "banner_image": {
           "description": "The URL of an image to use as a banner. Some blogging systems (such as Medium) display a different banner image chosen to go with each post, but that image wouldn’t otherwise appear in the \"content_html\". A feed reader with a detail view may choose to show this banner image at the top of the detail view, possibly with the title overlaid.",
           "allOf": [ { "$ref": "#/definitions/uri" } ]
@@ -139,6 +149,10 @@
         "image": {
           "description": "The URL of the main image for the item. This image may also appear in the \"content_html\" — if so, it’s a hint to the feed reader that this is the main, featured image. Feed readers may use the image as a preview.",
           "allOf": [ { "$ref": "#/definitions/uri" } ]
+        },
+        "language": {
+          "description": "Is the language for this item, using the same format as the top-level language field. The value can be different than the primary language for the feed when a specific item is written in a different language than other items in the feed.",
+          "type": "string"
         },
         "summary": {
           "description": "A plain text sentence or two describing the item. This might be presented in a timeline, for instance, where a detail view would display all of \"content_html\" or \"content_text\".",
@@ -177,6 +191,9 @@
   "properties": {
     "author": {
       "$ref": "#/definitions/author"
+    },
+    "authors": {
+      "$ref": "#/definitions/authors"
     },
     "description": {
       "description": "Provides more detail, beyond the title, on what the feed is about. A feed reader may display this text.",
@@ -224,6 +241,10 @@
         "$ref": "#/definitions/item"
       }
     },
+    "language": {
+      "description": "The primary language for the feed in the format specified in RFC 5646. The value is usually a 2-letter language tag from ISO 639-1, optionally followed by a region tag.",
+      "type": "string"
+    },
     "next_url": {
       "description": "The URL of a feed that provides the next n items, where n is determined by the publisher. This allows for pagination, but with the expectation that reader software is not required to use it and probably won’t use it very often. next_url must not be the same as feed_url, and it must not be the same as a previous next_url (to avoid infinite loops).",
       "allOf": [ { "$ref": "#/definitions/uri" } ]
@@ -239,7 +260,7 @@
     "version": {
       "description": "The URL of the version of the format the feed uses. This should appear at the very top, though we recognize that not all JSON generators allow for ordering.",
       "anyOf": [
-        { "enum": [ "https://jsonfeed.org/version/1" ] },
+        { "enum": [ "https://jsonfeed.org/version/1", "https://jsonfeed.org/version/1.1" ] },
         { "$ref": "#/definitions/uri" }
       ]
     }
