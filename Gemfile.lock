@@ -5,18 +5,20 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     json-schema (2.8.0)
       addressable (>= 2.4)
-    mustermann (1.0.0)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     public_suffix (2.0.5)
-    rack (2.0.3)
-    rack-protection (2.0.0)
+    rack (2.1.4)
+    rack-protection (2.0.2)
       rack
     rouge (2.0.7)
-    sinatra (2.0.0)
+    ruby2_keywords (0.0.4)
+    sinatra (2.0.2)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.2)
       tilt (~> 2.0)
-    tilt (2.0.7)
+    tilt (2.0.10)
 
 PLATFORMS
   ruby
