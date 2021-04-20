@@ -33,8 +33,9 @@ def download_feed(jsonfeed_url, limit = 5)
 
     if response.is_a?(Net::HTTPSuccess)
       s = response.body
-      if !response["content-type"] || !response["content-type"].include?("application/json")
-        raise FeedError.new("error", "Content-Type was #{response['content-type'] || "not sent"}. It should be application/json.")
+      content_type = response["content-type"]
+      if !content_type || (!content_type.include?("application/json") && !content_type.include?("application/feed+json"))
+        raise FeedError.new("error", "Content-Type was #{response['content-type'] || "not sent"}. It should be application/feed+json.")
       end
     elsif response.is_a?(Net::HTTPRedirection)
       location = response["location"]
