@@ -59,8 +59,8 @@ end
 def check_warnings(json)
   warnings = []
 
-  if json["version"] != "https://jsonfeed.org/version/1"
-    warnings << "The \"version\" field should have the value: https://jsonfeed.org/version/1"
+  if ["https://jsonfeed.org/version/1", "https://jsonfeed.org/version/1.1"].include? json["version"]
+    warnings << "The \"version\" field should have the value: https://jsonfeed.org/version/1 or https://jsonfeed.org/version/1"
   end
   
   if json["home_page_url"].nil?
