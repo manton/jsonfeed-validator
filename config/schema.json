@@ -208,7 +208,7 @@
       "allOf": [ { "$ref": "#/definitions/uri" } ]
     },
     "feed_url": {
-      "description": "The URL of the feed, and serves as the unique identifier for the feed. As with 'home_page_url', this should be considered required for feeds on the public web."
+      "description": "The URL of the feed, and serves as the unique identifier for the feed. As with 'home_page_url', this should be considered required for feeds on the public web.",
       "allOf": [ { "$ref": "#/definitions/uri" } ]
     },
     "home_page_url": {
