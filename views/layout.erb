@@ -11,44 +11,44 @@
 			padding-top: 5px;
 			padding-bottom: 0px;
 			margin-bottom: 5px;
-		}		
-		
+		}
+
 		a {
 			color: #609C1B;
 		}
-		
+
 		a:hover {
 			color: #497614;
 		}
-		
+
 		.icon {
 			float: left;
 			background-image: url("/images/icon.png");
 			background-repeat: no-repeat;
 			background-size: 70px 70px;
 			height: 70px;
-			width: 70px;			
+			width: 70px;
 			border-radius: 6px;
 			margin-right: 15px;
 		}
-		
+
 		.about {
 			padding-top: 0px;
 		}
-		
+
 		.feed_form {
 			padding-top: 20px;
 			padding-bottom: 20px;
 		}
-		
+
 		.feed_url {
 		}
-		
+
 		.alert-success {
 			background-color: #CAF695; /* #8AE028;*/
 			border-color: #8AE028; /* 75BD20 */
 		}
-		
+
 		.p {
 			color: gray;
 		}
@@ -58,12 +58,12 @@
 
 <div class="container">
 	<div class="header">
-		<span class="icon"></span>
-		<h1>JSON Feed Validator</h1>
+		<a href="/"><span class="icon"></span></a>
+		<h1><a href="/">JSON Feed Validator</a></h1>
 		<p class="about">Check whether your feed is valid. For more information about JSON Feed, <a href="https://jsonfeed.org/version/1.1">see the specification</a>.</p>
 	</div>
-	
-	<%= yield %>	
+
+	<%= yield %>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
