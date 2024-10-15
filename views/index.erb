@@ -9,7 +9,7 @@
 <% if @url.length > 0 && @errors.size == 0 %>
 	<div class="alert alert-success" role="alert">
 		<b>Success!</b> The feed looks valid.
-	</div>	
+	</div>
 <% else %>
 	<% for e in @errors %>
 		<% if e.type == "error" %>
@@ -20,10 +20,15 @@
 
 		<b><%= e.type.capitalize %>:</b> <%= e.message %>
 
-		</div>	
+		</div>
 	<% end %>
 <% end %>
 
+<% if @url.length > 0 %>
+<p>GET validation response in <a href="<%= request.fullpath + "&format=json" %>">JSON format</a>.</p>
+<% end %>
+
 <% if @json.length > 0 %>
+  <h2>Feed source</h2>
 	<pre><%= @json %></pre>
 <% end %>
