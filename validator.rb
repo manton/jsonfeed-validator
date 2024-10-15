@@ -52,7 +52,7 @@ def download_feed(jsonfeed_url, limit = 5)
   rescue Exception => e
     raise FeedError.new("error", "Unknown exception #{e.class.name}.")
   end
-      
+
   return s
 end
 
@@ -62,7 +62,7 @@ def check_warnings(json)
   if !["https://jsonfeed.org/version/1", "https://jsonfeed.org/version/1.1"].include? json["version"]
     warnings << "The \"version\" field should have the value: https://jsonfeed.org/version/1 or https://jsonfeed.org/version/1.1"
   end
-  
+
   if json["home_page_url"].nil?
     warnings << "The \"home_page_url\" field is missing. It is strongly recommended, but not required."
   end
@@ -70,7 +70,7 @@ def check_warnings(json)
   if json["feed_url"].nil?
     warnings << "The \"feed_url\" field is missing. It is strongly recommended, but not required."
   end
-  
+
   i = 0
   for item in json["items"].to_a
     if item["date_published"].nil?
@@ -78,11 +78,13 @@ def check_warnings(json)
     end
     i = i + 1
   end
-  
+
   return warnings
 end
 
 get '/' do
+  format = params[:format] || "html"
+
   @url = params[:url].to_s
   @errors = []
   @json = ""
@@ -92,7 +94,7 @@ get '/' do
       if !@url.include?("http")
         @url = "http://" + @url
       end
-    
+
       s = download_feed(@url)
       response_json = JSON.parse(s)
 
@@ -112,17 +114,26 @@ get '/' do
         cleaned = cleaned.gsub(/ in schema (.*)/, '.')
         @errors << FeedError.new("error", cleaned)
       end
-      
+
       warnings = check_warnings(response_json)
       for w in warnings
         @errors << FeedError.new("warning", w)
-      end      
+      end
     rescue JSON::ParserError => e
       @errors << FeedError.new("error", "JSON could not be parsed. #{e.message}.")
     rescue FeedError => e
       @errors << e
     end
   end
-  
-  erb :index
+
+  case format
+  when "json"
+    content_type :json
+    {
+      valid: (@url.length > 0 && @errors.size == 0),
+      errors: @errors.map { |error| { error.type.capitalize.to_s => e.message } }
+    }.to_json
+  else
+    erb :index
+  end
 end
