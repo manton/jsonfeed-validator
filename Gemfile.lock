@@ -7,21 +7,22 @@ GEM
       addressable (>= 2.4)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    public_suffix (5.1.1)
-    rack (2.2.10)
+    public_suffix (6.0.2)
+    rack (2.2.17)
     rack-protection (2.2.4)
       rack
-    rouge (2.0.7)
+    rouge (2.2.1)
     ruby2_keywords (0.0.5)
     sinatra (2.2.4)
       mustermann (~> 2.0)
       rack (~> 2.2)
       rack-protection (= 2.2.4)
       tilt (~> 2.0)
-    tilt (2.4.0)
+    tilt (2.6.1)
 
 PLATFORMS
   ruby
+  x86_64-darwin-23
 
 DEPENDENCIES
   json-schema (~> 2.8, >= 2.8.1)
@@ -29,7 +30,7 @@ DEPENDENCIES
   sinatra (~> 2.2, >= 2.2.4)
 
 RUBY VERSION
-   ruby 2.6.8p205
+   ruby 3.2.8p263
 
 BUNDLED WITH
-   1.17.3
+   2.7.1
