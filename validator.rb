@@ -131,7 +131,7 @@ get '/' do
     content_type :json
     {
       valid: (@url.length > 0 && @errors.size == 0),
-      errors: @errors.map { |error| { error.type.capitalize.to_s => e.message } }
+      errors: @errors.map { |error| { error.type.capitalize.to_s => error.message } }
     }.to_json
   else
     erb :index
